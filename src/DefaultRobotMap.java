@@ -46,10 +46,10 @@ public class DefaultRobotMap implements RobotMap {
             throw new RobotCreationException(e.getMessage());
         }
 
-        NewRobot newRobot = new NewRobot(robotPosition);
+        NewRobot robot = new NewRobot(robotPosition);
         if (newRobots.size() > maxRobot)
             throw new MaxRobotException("Достигнуто максимальное количество роботов");
-        newRobots.add(newRobot);
+        newRobots.add(robot);
     }
 
     private void validatePoint(Point point) throws PointValidationException {
@@ -57,9 +57,9 @@ public class DefaultRobotMap implements RobotMap {
     }
 
     private void validatePointIsFree(Point point) throws PointValidationException {
-        for (NewRobot newRobot : newRobots) {
-            if (point.equals(newRobot.getPoint())) {
-                throw new PointValidationException("Позиция " + point + " занята другим роботом: " + newRobot);
+        for (Robot robot : newRobots) {
+            if (point.equals(robot.getPoint())) {
+                throw new PointValidationException("Позиция " + point + " занята другим роботом: " + robot);
             }
         }
     }

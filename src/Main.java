@@ -23,7 +23,7 @@ public class Main {
                 """);
 
         RobotMapFactory robotMapFactory = new RobotMapFactory();
-        RobotMap map;
+        RobotMap map = null;
         while (true) {
             System.out.println("Для создания карты введите 2 числа в диапозоне от 10 до 100 через пробел" + "\n");
 
@@ -31,32 +31,36 @@ public class Main {
                 int n = userInput.nextInt();
                 int m = userInput.nextInt();
                 userInput.nextLine();
+                
+                while (true) {
+                    System.out.println("Вы хотите задать максимальное количество роботов?," +
+                            " если не хотите введите 0 (ноль)" + "\n");
 
-                System.out.println("Вы хотите задать максимальное количество роботов?," +
-                        " если не хотите введите 0 (ноль)" + "\n");
+                    try {
+                        int max = userInput.nextInt();
+                        userInput.nextLine();
 
-                try {
-                    int max = userInput.nextInt();
-
-                    if (max == 0) {
-                        map = robotMapFactory.create(n, m);
-                    } else {
-                        map = robotMapFactory.create(n, m, max);
+                        if (max == 0) {
+                            map = robotMapFactory.create(n, m);
+                        } else {
+                            map = robotMapFactory.create(n, m, max);
+                        }
+                        break;
+                    } catch (RobotMapCreationException | MaxRobotException e) {
+                        System.err.println("\n" + "Возникла ошибка при создании карты: " + e.getMessage() + "\n");
+                    } catch (InputMismatchException e) {
+                        System.err.println("\n" + "Возникла ошибка: введены не числа" + "\n");
+                        userInput.nextLine();
+                    } catch (Throwable e) {
+                        System.err.println("\n" + "Возникла проблема на стороне сервера: " + e.getMessage() + "\n");
+                        System.exit(1);
                     }
-                    break;
-                } catch (RobotMapCreationException e) {
-                    System.err.println("\n" + "Возникла ошибка при создании карты: " + e.getMessage() + "\n");
-                } catch (InputMismatchException e) {
-                    System.err.println("\n" + "Возникла ошибка: введены не числа" + "\n");
-                    userInput.nextLine();
-                } catch (Throwable e) {
-                    System.err.println("\n" + "Возникла проблема на стороне сервера: " + e.getMessage() + "\n");
-                    System.exit(1);
                 }
             } catch (InputMismatchException e) {
                 System.err.println("\n" + "Возникла ошибка: введены не числа" + "\n");
                 userInput.nextLine();
             }
+            break;
         }
 
         System.out.println("Карта успешно создана" + "\n");
