@@ -4,7 +4,7 @@ public class RobotMapFactory {
         return new DefaultRobotMap(n, m);
     }
 
-    public RobotMap create(int n, int m, int max) throws RobotMapCreationException {
-        return new DefaultRobotMap(n, m);
+    public RobotMap create(int n, int m, int max) throws RobotMapCreationException, MaxRobotException {
+        return new DefaultRobotMap(n, m, max);
     }
 }
