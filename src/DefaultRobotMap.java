@@ -7,6 +7,8 @@ public class DefaultRobotMap implements RobotMap {
     private final int m;
     private final List<Robot> robots;
 
+    private int maxRobot;
+
     public List<Robot> getRobots() {
         return robots;
 
@@ -22,7 +24,20 @@ public class DefaultRobotMap implements RobotMap {
         this.robots = new ArrayList<>();
     }
 
-    public void createRobot(Point point) throws RobotCreationException {
+    public DefaultRobotMap(int n, int m, int maxRobot) throws RobotMapCreationException, MaxRobotException {
+        if (n < 10 || m < 10 || n > 100 || m > 100)
+            throw new RobotMapCreationException("Некорректный размер карты");
+        if(maxRobot < 0)
+            throw new MaxRobotException("Количество роботов не может быть отрицательное число");
+
+        this.n = n;
+        this.m = m;
+        this.robots = new ArrayList<>();
+        this.maxRobot = maxRobot;
+    }
+
+
+    public void createRobot(Point point) throws RobotCreationException, MaxRobotException {
         final MapPoint robotPosition;
         try {
             validatePoint(point);
@@ -32,6 +47,8 @@ public class DefaultRobotMap implements RobotMap {
         }
 
         Robot robot = new Robot(robotPosition);
+        if (robots.size() > maxRobot)
+            throw new MaxRobotException("Достигнуто максимальное количество роботов");
         robots.add(robot);
     }
 

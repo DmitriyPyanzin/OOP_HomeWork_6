@@ -42,7 +42,7 @@ public class CommandManager {
 
         try {
             map.createRobot(new Point(x, y));
-        } catch (RobotCreationException e) {
+        } catch (RobotCreationException | MaxRobotException e) {
             throw new CommandExecutionException(e.getMessage());
         }
 

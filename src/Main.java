@@ -32,16 +32,30 @@ public class Main {
                 int m = userInput.nextInt();
                 userInput.nextLine();
 
-                map = robotMapFactory.create(n, m);
-                break;
-            } catch (RobotMapCreationException e) {
-                System.err.println("\n" + "Возникла ошибка при создании карты: " + e.getMessage() + "\n");
+                System.out.println("Вы хотите задать максимальное количество роботов?," +
+                        " если не хотите введите 0 (ноль)" + "\n");
+
+                try {
+                    int max = userInput.nextInt();
+
+                    if (max == 0) {
+                        map = robotMapFactory.create(n, m);
+                    } else {
+                        map = robotMapFactory.create(n, m, max);
+                    }
+                    break;
+                } catch (RobotMapCreationException e) {
+                    System.err.println("\n" + "Возникла ошибка при создании карты: " + e.getMessage() + "\n");
+                } catch (InputMismatchException e) {
+                    System.err.println("\n" + "Возникла ошибка: введены не числа" + "\n");
+                    userInput.nextLine();
+                } catch (Throwable e) {
+                    System.err.println("\n" + "Возникла проблема на стороне сервера: " + e.getMessage() + "\n");
+                    System.exit(1);
+                }
             } catch (InputMismatchException e) {
                 System.err.println("\n" + "Возникла ошибка: введены не числа" + "\n");
                 userInput.nextLine();
-            } catch (Throwable e) {
-                System.err.println("\n" + "Возникла проблема на стороне сервера: " + e.getMessage() + "\n");
-                System.exit(1);
             }
         }
 
