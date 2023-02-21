@@ -5,12 +5,12 @@ public class DefaultRobotMap implements RobotMap {
 
     private final int n;
     private final int m;
-    private final List<Robot> robots;
+    private final List<NewRobot> newRobots;
 
     private int maxRobot;
 
-    public List<Robot> getRobots() {
-        return robots;
+    public List<NewRobot> getRobots() {
+        return newRobots;
 
     }
 
@@ -21,7 +21,7 @@ public class DefaultRobotMap implements RobotMap {
 
         this.n = n;
         this.m = m;
-        this.robots = new ArrayList<>();
+        this.newRobots = new ArrayList<>();
     }
 
     public DefaultRobotMap(int n, int m, int maxRobot) throws RobotMapCreationException, MaxRobotException {
@@ -32,7 +32,7 @@ public class DefaultRobotMap implements RobotMap {
 
         this.n = n;
         this.m = m;
-        this.robots = new ArrayList<>();
+        this.newRobots = new ArrayList<>();
         this.maxRobot = maxRobot;
     }
 
@@ -46,10 +46,10 @@ public class DefaultRobotMap implements RobotMap {
             throw new RobotCreationException(e.getMessage());
         }
 
-        Robot robot = new Robot(robotPosition);
-        if (robots.size() > maxRobot)
+        NewRobot newRobot = new NewRobot(robotPosition);
+        if (newRobots.size() > maxRobot)
             throw new MaxRobotException("Достигнуто максимальное количество роботов");
-        robots.add(robot);
+        newRobots.add(newRobot);
     }
 
     private void validatePoint(Point point) throws PointValidationException {
@@ -57,14 +57,14 @@ public class DefaultRobotMap implements RobotMap {
     }
 
     private void validatePointIsFree(Point point) throws PointValidationException {
-        for (Robot robot : robots) {
-            if (point.equals(robot.getPoint())) {
-                throw new PointValidationException("Позиция " + point + " занята другим роботом: " + robot);
+        for (NewRobot newRobot : newRobots) {
+            if (point.equals(newRobot.getPoint())) {
+                throw new PointValidationException("Позиция " + point + " занята другим роботом: " + newRobot);
             }
         }
     }
 
-    public class Robot {
+    public class NewRobot implements Robot{
 
         public static final Direction DEFAULT_DIRECTION = Direction.TOP;
 
@@ -73,7 +73,7 @@ public class DefaultRobotMap implements RobotMap {
         private MapPoint point;
         private Direction direction;
 
-        public Robot(MapPoint point) {
+        public NewRobot(MapPoint point) {
             this.id = idSequence++;
             this.point = point;
             this.direction = DEFAULT_DIRECTION;

@@ -101,22 +101,22 @@ public class CommandManager {
         int index = Integer.parseInt(args[0]) - 1;
         if (map.getRobots().size() < index || index < 0)
             throw new CommandExecutionException("Нет такого робота");
-        DefaultRobotMap.Robot robot = map.getRobots().get(index);
+        DefaultRobotMap.NewRobot newRobot = map.getRobots().get(index);
 
         if (args.length == 1) {
             try {
-                robot.move();
+                newRobot.move();
             } catch (RobotMoveException e) {
                 System.err.println(e.getMessage());
             }
         } else {
             int step = Integer.parseInt(args[1]);
             try {
-                robot.move(step);
+                newRobot.move(step);
             } catch (RobotMoveException e) {
                 System.err.println(e.getMessage());
             }
-        } return "Теперь другие координаты у " + robot + "\n";
+        } return "Теперь другие координаты у " + newRobot + "\n";
     }
 
     private String changeDirectionRobot(String[] args) throws CommandExecutionException {
@@ -130,7 +130,7 @@ public class CommandManager {
         int index = Integer.parseInt(args[0]) - 1;
         if (map.getRobots().size() < index || index < 0)
             throw new CommandExecutionException("Нет такого робота");
-        DefaultRobotMap.Robot robot = map.getRobots().get(index);
+        DefaultRobotMap.NewRobot newRobot = map.getRobots().get(index);
 
         String dir = "";
         switch (String.valueOf(args[1])) {
@@ -140,8 +140,8 @@ public class CommandManager {
             case "l" -> dir = "LEFT";
         }
         Direction direction = Direction.valueOf(dir);
-        robot.changeDirection(direction);
+        newRobot.changeDirection(direction);
 
-        return "Изменение направления у " + robot + "\n";
+        return "Изменение направления у " + newRobot + "\n";
     }
 }
