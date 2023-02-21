@@ -99,6 +99,8 @@ public class CommandManager {
             throw new CommandExecutionException("Не создано не одного робота");
 
         int index = Integer.parseInt(args[0]) - 1;
+        if (map.getRobots().size() < index || index < 0)
+            throw new CommandExecutionException("Нет такого робота");
         DefaultRobotMap.Robot robot = map.getRobots().get(index);
 
         if (args.length == 1) {
@@ -126,6 +128,8 @@ public class CommandManager {
             throw new CommandExecutionException("Не создано не одного робота");
 
         int index = Integer.parseInt(args[0]) - 1;
+        if (map.getRobots().size() < index || index < 0)
+            throw new CommandExecutionException("Нет такого робота");
         DefaultRobotMap.Robot robot = map.getRobots().get(index);
 
         String dir = "";
