@@ -85,11 +85,6 @@ public class CommandManager {
         return null;
     }
 
-    private interface CommandExecutor {
-        String execute(String[] args) throws CommandExecutionException;
-
-    }
-
     private String moveRobot(String[] args) throws CommandExecutionException {
         if (args.length == 0)
             throw new CommandExecutionException("Недостаточно аргументов");
